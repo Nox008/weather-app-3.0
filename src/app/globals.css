@@ -1,139 +1,106 @@
+/* FILE: src/styles/globals.css */
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-900: #0b1220; /* deep background */
+  --bg-700: #152234;
+  --glass-1: rgba(255,255,255,0.06);
+  --glass-2: rgba(255,255,255,0.03);
+  --muted: #94a3b8;
+}
+
+html, body {
+  height: 100%;
 }
 
 body {
-  background-color: rgb(17 24 39); /* Manually writing the color value */
- }
- 
- 
- main {
+  background: linear-gradient(180deg, var(--bg-700) 0%, var(--bg-900) 100%);
+  color: #e6eef8;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
   position: relative; /* For absolute positioning of the background */
   z-index: 1; /* Ensure content is above the background */
- }
- 
- 
- .bg-animation-container {
+}
+
+/* Global glass card helper */
+.card-glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px) saturate(120%);
+}
+
+/* Animated background container */
+.bg-animation-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 0;
-  pointer-events: none; /* Allow clicks to pass through */
- }
- 
- 
- /* Default Background (Static Gradient) */
- .bg-default {
-  background: linear-gradient(to top, #3a506b, #1c2541);
- }
- 
- 
- /* Sunny Animation */
- .bg-sunny-animated {
-  background: linear-gradient(to top, #f7b733, #fc4a1a);
- }
- 
- 
- /* Partly Cloudy Animation */
- .bg-partly-cloudy {
-  background: linear-gradient(to top, #e0eafc, #6dd5ed);
- }
- 
- 
- /* Cloudy Animation */
- .bg-cloudy-animated {
-  background: linear-gradient(to top, #bdc3c7, #2c3e50);
- }
- 
- 
- /* Foggy Animation */
- .bg-foggy-animated {
-  background: linear-gradient(to top, #d7d7d7, #b6b6b6);
- }
- 
- 
- /* Rainy Animation */
- .bg-rainy-animated {
-  background: linear-gradient(to top, #314755, #26a0da);
- }
- 
- 
- .rain-drop {
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Weather moods */
+.bg-default { background: linear-gradient(to top, #3a506b, #1c2541); }
+.bg-sunny-animated { background: linear-gradient(to top, #f7b733, #fc4a1a); }
+.bg-partly-cloudy {
+  /* Keep the bright blue tones but add a semi-opaque dark overlay so white text stays readable */
+  background-image: linear-gradient(180deg, rgba(6,10,20,0.60), rgba(6,10,20,0.25)), linear-gradient(to top, #e0eafc, #6dd5ed);
+  color: #e6eef8; /* ensure descendants inherit a light text color */
+}
+.bg-cloudy-animated { background: linear-gradient(to top, #bdc3c7, #2c3e50); }
+.bg-foggy-animated { background: linear-gradient(to top, #d7d7d7, #b6b6b6); }
+.bg-rainy-animated { background: linear-gradient(to top, #314755, #26a0da); }
+.bg-snowy-animated { background: linear-gradient(to top, #f0f0f0, #e0e0e0); }
+.bg-thunderstorm-animated { background: linear-gradient(to top, #434343, #000000); }
+
+.rain-drop {
   position: absolute;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.22);
   border-radius: 50%;
   opacity: 0;
-  animation: rain 0.5s linear infinite;
- }
- 
- 
- @keyframes rain {
-  0% {
-  transform: translateY(-100vh) scale(1);
-  opacity: 0;
-  }
-  80% {
-  opacity: 1;
-  }
-  100% {
-  transform: translateY(20vh) scale(1.2);
-  opacity: 0;
-  }
- }
- 
- 
- /* Snowy Animation */
- .bg-snowy-animated {
-  background: linear-gradient(to top, #f0f0f0, #e0e0e0);
- }
- 
- 
- .snow-flake {
+  animation: rain 0.6s linear infinite;
+}
+
+@keyframes rain {
+  0% { transform: translateY(-100vh) scale(1); opacity: 0; }
+  70% { opacity: 1; }
+  100% { transform: translateY(20vh) scale(1.1); opacity: 0; }
+}
+
+.snow-flake {
   position: absolute;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.75);
   border-radius: 50%;
   opacity: 0;
   animation: snow 2s linear infinite;
- }
- 
- 
- @keyframes snow {
-  0% {
-  transform: translateY(-100vh) scale(0.8);
-  opacity: 0;
-  }
-  20% {
-  opacity: 1;
-  }
-  100% {
-  transform: translateY(15vh) scale(1.5);
-  opacity: 0;
-  }
- }
- 
- 
- /* Thunderstorm Animation */
- .bg-thunderstorm-animated {
-  background: linear-gradient(to top, #434343, #000000);
- }
- 
- 
- .lightning {
+}
+
+@keyframes snow {
+  0% { transform: translateY(-100vh) scale(0.8); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(15vh) scale(1.5); opacity: 0; }
+}
+
+.lightning {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.9);
   opacity: 0;
   border-radius: 5px;
   animation: flash 1s steps(10) infinite;
- }
- 
- 
- @keyframes flash {
-  50% {
-  opacity: 1;
-  }
- }
+}
+
+@keyframes flash { 50% { opacity: 1; } }
+
+/* scrollbar tweaks for forecasts */
+.scrollbar-thin { scrollbar-width: thin; }
+.scrollbar-thumb-white\/20::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 999px; }
+
+/* small utility */
+.text-muted { color: var(--muted); }
+
+/* end of globals.css */
